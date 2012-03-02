@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<project name="rich" default="main" basedir="."> 
+	 <property name="dir" value="." />
+	 <property name="src" value="${dir}\src" /> 
+	 <property name="dest" value="${dir}\bin" /> 
+	 <property name="targetJar" value="${dir}\rich.jar" /> 
+	 <property name="main_class" value="tw.homework.rich.Main" />
+	 <target name="init"> 
+		<tstamp />
+		<mkdir dir="${dest}"/> 
+	 </target> 
+	 <target name="compile" depends="init"> 
+		<javac srcdir="${src}" destdir="${dest}" encoding="utf-8" /> 
+	 </target> 
+	 <target name="build" depends="compile"> 
+		<jar jarfile="${targetJar}" basedir="${dest}"> 
+			<manifest>
+                <attribute name="Main-Class" value="${main_class}"/>
+            </manifest>
+		</jar>
+	 </target> 
+	  <target name="run" depends="build"> 
+		<java fork="true" jar="${targetJar}" />
+	 </target>
+    <!--
+	 <target name="junit" depends="build">
+        <junit printsummary="yes">
+            <classpath>
+                <path refid="application"/>
+            </classpath>
+            
+            <batchtest fork="yes">
+                <fileset dir="${src}" includes="TestPrice.java"/>
+            </batchtest>
+        </junit>
+    </target>
+    -->
+	<target name="clean"> 
+		<delete dir="${dest}" /> 
+		<delete file="${targetJar}" /> 
+	 </target> 
+	 <target name="main" depends="clean,run"/>
+</project> 
